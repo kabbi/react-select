@@ -1,6 +1,11 @@
 [![Build Status](https://travis-ci.org/JedWatson/react-select.svg?branch=master)](https://travis-ci.org/JedWatson/react-select)
 [![Coverage Status](https://coveralls.io/repos/JedWatson/react-select/badge.svg?branch=master&service=github)](https://coveralls.io/github/JedWatson/react-select?branch=master)
 
+This Fork
+=========
+
+Updated react-select to use react-input-autosize of the latest version, making it compatible with react@v15 and later.
+
 React-Select
 ============
 
@@ -137,7 +142,7 @@ import Select from 'react-select';
 
 /*
  * assuming the API returns something like this:
- *   const json = [ 
+ *   const json = [
  * 	   { value: 'one', label: 'One' },
  * 	   { value: 'two', label: 'Two' }
  *   ]
