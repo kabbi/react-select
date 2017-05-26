@@ -1,7 +1,7 @@
 import GravatarOption from './CustomOption';
 import GravatarValue from './CustomSingleValue';
 import React from 'react';
-import Select from 'react-select';
+import Select from '@kabbi/react-select';
 
 const USERS = require('../data/users');
 

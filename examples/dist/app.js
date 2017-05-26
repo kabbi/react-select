@@ -13,9 +13,9 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactSelect = require('react-select');
+var _kabbiReactSelect = require('@kabbi/react-select');
 
-var _reactSelect2 = _interopRequireDefault(_reactSelect);
+var _kabbiReactSelect2 = _interopRequireDefault(_kabbiReactSelect);
 
 var _componentsContributors = require('./components/Contributors');
 
@@ -82,7 +82,7 @@ _reactDom2['default'].render(_react2['default'].createElement(
 	_react2['default'].createElement(_componentsRemoteSelectField2['default'], { label: 'Remote Options', hint: 'Type anything in the remote example to asynchronously load options. Valid alternative results are "A", "AA", and "AB"' })
 ), document.getElementById('example'));
 
-},{"./components/Contributors":2,"./components/CustomKeysField":3,"./components/CustomRenderField":5,"./components/DisabledUpsellOptions":7,"./components/MultiSelectField":8,"./components/RemoteSelectField":9,"./components/SelectedValuesField":10,"./components/StatesField":11,"./components/UsersField":12,"./components/ValuesAsNumbersField":13,"react":undefined,"react-dom":undefined,"react-select":undefined}],2:[function(require,module,exports){
+},{"./components/Contributors":2,"./components/CustomKeysField":3,"./components/CustomRenderField":5,"./components/DisabledUpsellOptions":7,"./components/MultiSelectField":8,"./components/RemoteSelectField":9,"./components/SelectedValuesField":10,"./components/StatesField":11,"./components/UsersField":12,"./components/ValuesAsNumbersField":13,"@kabbi/react-select":undefined,"react":undefined,"react-dom":undefined}],2:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -91,9 +91,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = require('react-select');
+var _kabbiReactSelect = require('@kabbi/react-select');
 
-var _reactSelect2 = _interopRequireDefault(_reactSelect);
+var _kabbiReactSelect2 = _interopRequireDefault(_kabbiReactSelect);
 
 var CONTRIBUTORS = require('../data/contributors');
 
@@ -143,7 +143,7 @@ var Contributors = _react2['default'].createClass({
 				{ className: 'section-heading' },
 				this.props.label
 			),
-			_react2['default'].createElement(_reactSelect2['default'], { multi: true, value: this.state.value, onChange: this.onChange, valueKey: 'github', labelKey: 'name', asyncOptions: this.loadOptions }),
+			_react2['default'].createElement(_kabbiReactSelect2['default'], { multi: true, value: this.state.value, onChange: this.onChange, valueKey: 'github', labelKey: 'name', asyncOptions: this.loadOptions }),
 			this.renderHint()
 		);
 	}
@@ -151,7 +151,7 @@ var Contributors = _react2['default'].createClass({
 
 module.exports = Contributors;
 
-},{"../data/contributors":14,"react":undefined,"react-select":undefined}],3:[function(require,module,exports){
+},{"../data/contributors":14,"@kabbi/react-select":undefined,"react":undefined}],3:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -160,9 +160,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = require('react-select');
+var _kabbiReactSelect = require('@kabbi/react-select');
 
-var _reactSelect2 = _interopRequireDefault(_reactSelect);
+var _kabbiReactSelect2 = _interopRequireDefault(_kabbiReactSelect);
 
 function logChange() {
 	console.log.apply(console, [].concat(['Select value changed:'], Array.prototype.slice.apply(arguments)));
@@ -204,7 +204,7 @@ var CustomKeysField = _react2['default'].createClass({
 				{ className: 'section-heading' },
 				this.props.label
 			),
-			_react2['default'].createElement(_reactSelect2['default'], {
+			_react2['default'].createElement(_kabbiReactSelect2['default'], {
 				searchable: true,
 				labelKey: 'name',
 				valueKey: 'id',
@@ -233,7 +233,7 @@ var CustomKeysField = _react2['default'].createClass({
 
 module.exports = CustomKeysField;
 
-},{"react":undefined,"react-select":undefined}],4:[function(require,module,exports){
+},{"@kabbi/react-select":undefined,"react":undefined}],4:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -302,9 +302,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = require('react-select');
+var _kabbiReactSelect = require('@kabbi/react-select');
 
-var _reactSelect2 = _interopRequireDefault(_reactSelect);
+var _kabbiReactSelect2 = _interopRequireDefault(_kabbiReactSelect);
 
 function logChange() {
 	console.log.apply(console, [].concat(['Select value changed:'], Array.prototype.slice.apply(arguments)));
@@ -352,7 +352,7 @@ var CustomRenderField = _react2['default'].createClass({
 				{ className: 'section-heading' },
 				this.props.label
 			),
-			_react2['default'].createElement(_reactSelect2['default'], {
+			_react2['default'].createElement(_kabbiReactSelect2['default'], {
 				delimiter: this.props.delimiter,
 				multi: this.state.multi,
 				allowCreate: true,
@@ -381,7 +381,7 @@ var CustomRenderField = _react2['default'].createClass({
 
 module.exports = CustomRenderField;
 
-},{"react":undefined,"react-select":undefined}],6:[function(require,module,exports){
+},{"@kabbi/react-select":undefined,"react":undefined}],6:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -437,9 +437,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = require('react-select');
+var _kabbiReactSelect = require('@kabbi/react-select');
 
-var _reactSelect2 = _interopRequireDefault(_reactSelect);
+var _kabbiReactSelect2 = _interopRequireDefault(_kabbiReactSelect);
 
 function logChange() {
 	console.log.apply(console, [].concat(['Select value changed:'], Array.prototype.slice.apply(arguments)));
@@ -480,7 +480,7 @@ var DisabledUpsellOptions = _react2['default'].createClass({
 				{ className: 'section-heading' },
 				this.props.label
 			),
-			_react2['default'].createElement(_reactSelect2['default'], {
+			_react2['default'].createElement(_kabbiReactSelect2['default'], {
 				onOptionLabelClick: this.onLabelClick,
 				placeholder: 'Select your support level',
 				options: ops,
@@ -491,7 +491,7 @@ var DisabledUpsellOptions = _react2['default'].createClass({
 });
 module.exports = DisabledUpsellOptions;
 
-},{"react":undefined,"react-select":undefined}],8:[function(require,module,exports){
+},{"@kabbi/react-select":undefined,"react":undefined}],8:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -500,9 +500,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = require('react-select');
+var _kabbiReactSelect = require('@kabbi/react-select');
 
-var _reactSelect2 = _interopRequireDefault(_reactSelect);
+var _kabbiReactSelect2 = _interopRequireDefault(_kabbiReactSelect);
 
 function logChange() {
 	console.log.apply(console, [].concat(['Select value changed:'], Array.prototype.slice.apply(arguments)));
@@ -536,7 +536,7 @@ var MultiSelectField = _react2['default'].createClass({
 				{ className: 'section-heading' },
 				this.props.label
 			),
-			_react2['default'].createElement(_reactSelect2['default'], { multi: true, disabled: this.state.disabled, value: this.state.value, placeholder: 'Select your favourite(s)', options: ops, onChange: this.handleSelectChange }),
+			_react2['default'].createElement(_kabbiReactSelect2['default'], { multi: true, disabled: this.state.disabled, value: this.state.value, placeholder: 'Select your favourite(s)', options: ops, onChange: this.handleSelectChange }),
 			_react2['default'].createElement(
 				'div',
 				{ className: 'checkbox-list' },
@@ -557,7 +557,7 @@ var MultiSelectField = _react2['default'].createClass({
 
 module.exports = MultiSelectField;
 
-},{"react":undefined,"react-select":undefined}],9:[function(require,module,exports){
+},{"@kabbi/react-select":undefined,"react":undefined}],9:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -566,9 +566,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = require('react-select');
+var _kabbiReactSelect = require('@kabbi/react-select');
 
-var _reactSelect2 = _interopRequireDefault(_reactSelect);
+var _kabbiReactSelect2 = _interopRequireDefault(_kabbiReactSelect);
 
 var RemoteSelectField = _react2['default'].createClass({
 	displayName: 'RemoteSelectField',
@@ -619,7 +619,7 @@ var RemoteSelectField = _react2['default'].createClass({
 				{ className: 'section-heading' },
 				this.props.label
 			),
-			_react2['default'].createElement(_reactSelect2['default'], { asyncOptions: this.loadOptions, className: 'remote-example' }),
+			_react2['default'].createElement(_kabbiReactSelect2['default'], { asyncOptions: this.loadOptions, className: 'remote-example' }),
 			this.renderHint()
 		);
 	}
@@ -627,7 +627,7 @@ var RemoteSelectField = _react2['default'].createClass({
 
 module.exports = RemoteSelectField;
 
-},{"react":undefined,"react-select":undefined}],10:[function(require,module,exports){
+},{"@kabbi/react-select":undefined,"react":undefined}],10:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -636,9 +636,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = require('react-select');
+var _kabbiReactSelect = require('@kabbi/react-select');
 
-var _reactSelect2 = _interopRequireDefault(_reactSelect);
+var _kabbiReactSelect2 = _interopRequireDefault(_kabbiReactSelect);
 
 function logChange() {
 	console.log.apply(console, [].concat(['Select value changed:'], Array.prototype.slice.apply(arguments)));
@@ -672,7 +672,7 @@ var SelectedValuesField = _react2['default'].createClass({
 				{ className: 'section-heading' },
 				this.props.label
 			),
-			_react2['default'].createElement(_reactSelect2['default'], {
+			_react2['default'].createElement(_kabbiReactSelect2['default'], {
 				allowCreate: this.props.allowCreate,
 				onOptionLabelClick: this.onLabelClick,
 				value: this.props.options.slice(1, 3),
@@ -687,7 +687,7 @@ var SelectedValuesField = _react2['default'].createClass({
 
 module.exports = SelectedValuesField;
 
-},{"react":undefined,"react-select":undefined}],11:[function(require,module,exports){
+},{"@kabbi/react-select":undefined,"react":undefined}],11:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -696,9 +696,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = require('react-select');
+var _kabbiReactSelect = require('@kabbi/react-select');
 
-var _reactSelect2 = _interopRequireDefault(_reactSelect);
+var _kabbiReactSelect2 = _interopRequireDefault(_kabbiReactSelect);
 
 var STATES = require('../data/states');
 var id = 0;
@@ -760,7 +760,7 @@ var StatesField = _react2['default'].createClass({
 				{ className: 'section-heading' },
 				this.props.label
 			),
-			_react2['default'].createElement(_reactSelect2['default'], { ref: 'stateSelect', options: ops, disabled: this.state.disabled, value: this.state.selectValue, onChange: this.updateValue, searchable: this.state.searchable }),
+			_react2['default'].createElement(_kabbiReactSelect2['default'], { ref: 'stateSelect', options: ops, disabled: this.state.disabled, value: this.state.selectValue, onChange: this.updateValue, searchable: this.state.searchable }),
 			_react2['default'].createElement(
 				'div',
 				{ style: { marginTop: 14 } },
@@ -820,7 +820,7 @@ var StatesField = _react2['default'].createClass({
 
 module.exports = StatesField;
 
-},{"../data/states":15,"react":undefined,"react-select":undefined}],12:[function(require,module,exports){
+},{"../data/states":15,"@kabbi/react-select":undefined,"react":undefined}],12:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -837,9 +837,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = require('react-select');
+var _kabbiReactSelect = require('@kabbi/react-select');
 
-var _reactSelect2 = _interopRequireDefault(_reactSelect);
+var _kabbiReactSelect2 = _interopRequireDefault(_kabbiReactSelect);
 
 var USERS = require('../data/users');
 
@@ -868,7 +868,7 @@ var UsersField = _react2['default'].createClass({
 				{ className: 'section-heading' },
 				this.props.label
 			),
-			_react2['default'].createElement(_reactSelect2['default'], {
+			_react2['default'].createElement(_kabbiReactSelect2['default'], {
 				onOptionLabelClick: this.onLabelClick,
 				placeholder: 'Select user',
 				optionComponent: _CustomOption2['default'],
@@ -881,7 +881,7 @@ var UsersField = _react2['default'].createClass({
 
 module.exports = UsersField;
 
-},{"../data/users":16,"./CustomOption":4,"./CustomSingleValue":6,"react":undefined,"react-select":undefined}],13:[function(require,module,exports){
+},{"../data/users":16,"./CustomOption":4,"./CustomSingleValue":6,"@kabbi/react-select":undefined,"react":undefined}],13:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -890,9 +890,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSelect = require('react-select');
+var _kabbiReactSelect = require('@kabbi/react-select');
 
-var _reactSelect2 = _interopRequireDefault(_reactSelect);
+var _kabbiReactSelect2 = _interopRequireDefault(_kabbiReactSelect);
 
 function logChange() {
 	console.log.apply(console, [].concat(['Select value changed:'], Array.prototype.slice.apply(arguments)));
@@ -966,7 +966,7 @@ var ValuesAsNumbersField = _react2['default'].createClass({
 				{ className: 'section-heading' },
 				this.props.label
 			),
-			_react2['default'].createElement(_reactSelect2['default'], {
+			_react2['default'].createElement(_kabbiReactSelect2['default'], {
 				searchable: true,
 				matchProp: matchProp,
 				matchPos: this.state.matchPos,
@@ -1025,7 +1025,7 @@ var ValuesAsNumbersField = _react2['default'].createClass({
 
 module.exports = ValuesAsNumbersField;
 
-},{"react":undefined,"react-select":undefined}],14:[function(require,module,exports){
+},{"@kabbi/react-select":undefined,"react":undefined}],14:[function(require,module,exports){
 'use strict';
 
 module.exports = [{ github: 'jedwatson', name: 'Jed Watson' }, { github: 'bruderstein', name: 'Dave Brotherstone' }, { github: 'jossmac', name: 'Joss Mackison' }, { github: 'jniechcial', name: 'Jakub Niechciał' }, { github: 'craigdallimore', name: 'Craig Dallimore' }, { github: 'julen', name: 'Julen Ruiz Aizpuru' }, { github: 'dcousens', name: 'Daniel Cousens' }, { github: 'jgautsch', name: 'Jon Gautsch' }, { github: 'dmitry-smirnov', name: 'Dmitry Smirnov' }];

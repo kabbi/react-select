@@ -5,6 +5,7 @@ This Fork
 =========
 
 Updated react-select to use react-input-autosize of the latest version, making it compatible with react@v15 and later.
+Also updated it to use `create-react-class` and external `prop-types`.
 
 React-Select
 ============

@@ -8,6 +8,8 @@ var taskConfig = {
 		dependencies: [
 			'classnames',
 			'react-input-autosize',
+			'create-react-class',
+			'prop-types',
 			'react',
 			'react-dom'
 		],

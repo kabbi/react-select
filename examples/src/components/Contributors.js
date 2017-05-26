@@ -1,5 +1,5 @@
 import React from 'react';
-import Select from 'react-select';
+import Select from '@kabbi/react-select';
 
 var CONTRIBUTORS = require('../data/contributors');
 

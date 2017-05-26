@@ -1,6 +1,6 @@
 {
-  "name": "react-select",
-  "version": "0.9.1",
+  "name": "@kabbi/react-select",
+  "version": "0.9.2",
   "description": "A Select control built with and for ReactJS",
   "main": "lib/Select.js",
   "style": "dist/default.css",
@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
+    "create-react-class": "^15.5.3",
+    "prop-types": "^15.5.10",
     "react-input-autosize": "^1.1.0"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Select from 'react-select';
+import Select from '@kabbi/react-select';
 
 function logChange() {
 	console.log.apply(console, [].concat(['Select value changed:'], Array.prototype.slice.apply(arguments)));

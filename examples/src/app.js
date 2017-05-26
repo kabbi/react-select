@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Select from 'react-select';
+import Select from '@kabbi/react-select';
 
 import Contributors from './components/Contributors';
 import CustomKeysField from './components/CustomKeysField';
