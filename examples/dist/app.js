@@ -1376,8 +1376,15 @@ module.exports = function() {
 })();
 
 },{"charenc":17,"crypt":18,"is-buffer":19}],22:[function(require,module,exports){
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
 'use strict';
 /* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
@@ -1398,7 +1405,7 @@ function shouldUseNative() {
 		// Detect buggy property enumeration order in older V8 versions.
 
 		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
 		test1[5] = 'de';
 		if (Object.getOwnPropertyNames(test1)[0] === '5') {
 			return false;
@@ -1427,7 +1434,7 @@ function shouldUseNative() {
 		}
 
 		return true;
-	} catch (e) {
+	} catch (err) {
 		// We don't expect any of the above to throw, but better to be safe.
 		return false;
 	}
@@ -1447,8 +1454,8 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 			}
 		}
 
-		if (Object.getOwnPropertySymbols) {
-			symbols = Object.getOwnPropertySymbols(from);
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
 			for (var i = 0; i < symbols.length; i++) {
 				if (propIsEnumerable.call(from, symbols[i])) {
 					to[symbols[i]] = from[symbols[i]];
@@ -1465,6 +1472,94 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var strictUriEncode = require('strict-uri-encode');
 var objectAssign = require('object-assign');
 
+function encoderForArrayFormat(opts) {
+	switch (opts.arrayFormat) {
+		case 'index':
+			return function (key, value, index) {
+				return value === null ? [
+					encode(key, opts),
+					'[',
+					index,
+					']'
+				].join('') : [
+					encode(key, opts),
+					'[',
+					encode(index, opts),
+					']=',
+					encode(value, opts)
+				].join('');
+			};
+
+		case 'bracket':
+			return function (key, value) {
+				return value === null ? encode(key, opts) : [
+					encode(key, opts),
+					'[]=',
+					encode(value, opts)
+				].join('');
+			};
+
+		default:
+			return function (key, value) {
+				return value === null ? encode(key, opts) : [
+					encode(key, opts),
+					'=',
+					encode(value, opts)
+				].join('');
+			};
+	}
+}
+
+function parserForArrayFormat(opts) {
+	var result;
+
+	switch (opts.arrayFormat) {
+		case 'index':
+			return function (key, value, accumulator) {
+				result = /\[(\d*)\]$/.exec(key);
+
+				key = key.replace(/\[\d*\]$/, '');
+
+				if (!result) {
+					accumulator[key] = value;
+					return;
+				}
+
+				if (accumulator[key] === undefined) {
+					accumulator[key] = {};
+				}
+
+				accumulator[key][result[1]] = value;
+			};
+
+		case 'bracket':
+			return function (key, value, accumulator) {
+				result = /(\[\])$/.exec(key);
+				key = key.replace(/\[\]$/, '');
+
+				if (!result) {
+					accumulator[key] = value;
+					return;
+				} else if (accumulator[key] === undefined) {
+					accumulator[key] = [value];
+					return;
+				}
+
+				accumulator[key] = [].concat(accumulator[key], value);
+			};
+
+		default:
+			return function (key, value, accumulator) {
+				if (accumulator[key] === undefined) {
+					accumulator[key] = value;
+					return;
+				}
+
+				accumulator[key] = [].concat(accumulator[key], value);
+			};
+	}
+}
+
 function encode(value, opts) {
 	if (opts.encode) {
 		return opts.strict ? strictUriEncode(value) : encodeURIComponent(value);
@@ -1473,11 +1568,29 @@ function encode(value, opts) {
 	return value;
 }
 
+function keysSorter(input) {
+	if (Array.isArray(input)) {
+		return input.sort();
+	} else if (typeof input === 'object') {
+		return keysSorter(Object.keys(input)).sort(function (a, b) {
+			return Number(a) - Number(b);
+		}).map(function (key) {
+			return input[key];
+		});
+	}
+
+	return input;
+}
+
 exports.extract = function (str) {
 	return str.split('?')[1] || '';
 };
 
-exports.parse = function (str) {
+exports.parse = function (str, opts) {
+	opts = objectAssign({arrayFormat: 'none'}, opts);
+
+	var formatter = parserForArrayFormat(opts);
+
 	// Create an object with no prototype
 	// https://github.com/sindresorhus/query-string/issues/47
 	var ret = Object.create(null);
@@ -1499,31 +1612,36 @@ exports.parse = function (str) {
 		var key = parts.shift();
 		var val = parts.length > 0 ? parts.join('=') : undefined;
 
-		key = decodeURIComponent(key);
-
 		// missing `=` should be `null`:
 		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
 		val = val === undefined ? null : decodeURIComponent(val);
 
-		if (ret[key] === undefined) {
-			ret[key] = val;
-		} else if (Array.isArray(ret[key])) {
-			ret[key].push(val);
-		} else {
-			ret[key] = [ret[key], val];
-		}
+		formatter(decodeURIComponent(key), val, ret);
 	});
 
-	return ret;
+	return Object.keys(ret).sort().reduce(function (result, key) {
+		var val = ret[key];
+		if (Boolean(val) && typeof val === 'object' && !Array.isArray(val)) {
+			// Sort object keys, not values
+			result[key] = keysSorter(val);
+		} else {
+			result[key] = val;
+		}
+
+		return result;
+	}, Object.create(null));
 };
 
 exports.stringify = function (obj, opts) {
 	var defaults = {
 		encode: true,
-		strict: true
+		strict: true,
+		arrayFormat: 'none'
 	};
 
 	opts = objectAssign(defaults, opts);
+
+	var formatter = encoderForArrayFormat(opts);
 
 	return obj ? Object.keys(obj).sort().map(function (key) {
 		var val = obj[key];
@@ -1544,11 +1662,7 @@ exports.stringify = function (obj, opts) {
 					return;
 				}
 
-				if (val2 === null) {
-					result.push(encode(key, opts));
-				} else {
-					result.push(encode(key, opts) + '=' + encode(val2, opts));
-				}
+				result.push(formatter(key, val2, result.length));
 			});
 
 			return result.join('&');
@@ -1583,6 +1697,10 @@ var _isRetina = require('is-retina');
 
 var _isRetina2 = _interopRequireDefault(_isRetina);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -1599,7 +1717,7 @@ var Gravatar = function (_React$Component) {
   function Gravatar() {
     _classCallCheck(this, Gravatar);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Gravatar).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Gravatar.__proto__ || Object.getPrototypeOf(Gravatar)).apply(this, arguments));
   }
 
   _createClass(Gravatar, [{
@@ -1626,7 +1744,7 @@ var Gravatar = function (_React$Component) {
       if (this.props.md5) {
         hash = this.props.md5;
       } else if (typeof this.props.email === 'string') {
-        hash = (0, _md2.default)(formattedEmail);
+        hash = (0, _md2.default)(formattedEmail, { encoding: "binary" });
       } else {
         console.warn('Gravatar image can not be fetched. Either the "email" or "md5" prop must be specified.');
         return _react2.default.createElement('script', null);
@@ -1689,14 +1807,14 @@ var Gravatar = function (_React$Component) {
 
 Gravatar.displayName = 'Gravatar';
 Gravatar.propTypes = {
-  email: _react2.default.PropTypes.string,
-  md5: _react2.default.PropTypes.string,
-  size: _react2.default.PropTypes.number,
-  rating: _react2.default.PropTypes.string,
-  default: _react2.default.PropTypes.string,
-  className: _react2.default.PropTypes.string,
-  protocol: _react2.default.PropTypes.string,
-  style: _react2.default.PropTypes.object
+  email: _propTypes2.default.string,
+  md5: _propTypes2.default.string,
+  size: _propTypes2.default.number,
+  rating: _propTypes2.default.string,
+  default: _propTypes2.default.string,
+  className: _propTypes2.default.string,
+  protocol: _propTypes2.default.string,
+  style: _propTypes2.default.object
 };
 Gravatar.defaultProps = {
   size: 50,
@@ -1707,7 +1825,7 @@ Gravatar.defaultProps = {
 
 
 module.exports = Gravatar;
-},{"is-retina":20,"md5":21,"query-string":23,"react":undefined}],25:[function(require,module,exports){
+},{"is-retina":20,"md5":21,"prop-types":undefined,"query-string":23,"react":undefined}],25:[function(require,module,exports){
 'use strict';
 module.exports = function (str) {
 	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {

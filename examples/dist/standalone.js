@@ -537,44 +537,37 @@ var Select = createReactClass({
 
 	handleKeyDown: function handleKeyDown(event) {
 		if (this.props.disabled) return;
-		switch (event.keyCode) {
-			case 8:
-				// backspace
+		switch (event.key) {
+			case 'Backspace':
 				if (!this.state.inputValue && this.props.backspaceRemoves) {
 					event.preventDefault();
 					this.popValue();
 				}
 				return;
-			case 9:
-				// tab
+			case 'Tab':
 				if (event.shiftKey || !this.state.isOpen || !this.state.focusedOption) {
 					return;
 				}
 				this.selectFocusedOption();
 				break;
-			case 13:
-				// enter
+			case 'Enter':
 				if (!this.state.isOpen) return;
 				this.selectFocusedOption();
 				break;
-			case 27:
-				// escape
+			case 'Escape':
 				if (this.state.isOpen) {
 					this.resetValue();
 				} else if (this.props.clearable) {
 					this.clearValue(event);
 				}
 				break;
-			case 38:
-				// up
+			case 'ArrowUp':
 				this.focusPreviousOption();
 				break;
-			case 40:
-				// down
+			case 'ArrowDown':
 				this.focusNextOption();
 				break;
-			case 188:
-				// ,
+			case ',':
 				if (this.props.allowCreate && this.props.multi) {
 					event.preventDefault();
 					event.stopPropagation();

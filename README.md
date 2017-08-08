@@ -4,8 +4,8 @@
 This Fork
 =========
 
-Updated react-select to use react-input-autosize of the latest version, making it compatible with react@v15 and later.
-Also updated it to use `create-react-class` and external `prop-types`.
+- React v15 compatibility: external `prop-types`, upgraded deps, `create-react-class`
+- Fixed a bug with wrong coma key press on non-latin keyboard layouts
 
 React-Select
 ============
